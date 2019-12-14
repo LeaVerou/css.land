@@ -1,0 +1,121 @@
+body {
+	padding: 1em;
+	font: 100%/1.6 Helvetica Neue, sans-serif;
+}
+
+h1 {
+	margin: 0 0 .5em;
+	font-size: 300%;
+	line-height: 1;
+	letter-spacing: -.05em;
+}
+
+a {
+	color: inherit;
+}
+
+	a:not(:hover):not(:focus):not(:active) {
+		text-decoration: none;
+	}
+
+main {
+	padding: 1.5em;
+	border-radius: .5em;
+	max-width: 40em;
+	margin: 0 auto;
+	background: #f0f0f0;
+	box-shadow: .05em .05em .1em rgba(0,0,0,.2), 0 0 0 100vmax var(--color);
+}
+
+label {
+	display: block;
+	text-transform: uppercase;
+	font-size: smaller;
+	margin-top: 1em;
+	font-weight: bold;
+	color: rgba(0,0,0,.5);
+}
+
+abbr {
+	text-transform: initial;
+}
+
+input[type=range] {
+	display: block;
+	margin: 0 1em auto 0;
+	width: 100%;
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	background: transparent;
+	height: 2.2em;
+	border-radius: .3em;
+	box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+}
+
+input[type=range]::-webkit-slider-thumb {
+	width: 1em;
+	height: 2.3em;
+	-webkit-appearance: none;
+	border-radius: .15em;
+	border: 1px solid black;
+	box-shadow: 0 0 0 1px white;
+}
+
+input[type=range]::-moz-range-thumb {
+	width: 1em;
+	height: 2.3em;
+	border-radius: .15em;
+	border: 1px solid black;
+	box-shadow: 0 0 0 1px white;
+	background: transparent;
+}
+
+input[type=range]::-moz-range-track {
+   background: none;
+}
+
+input[property^=color] {
+	padding: .3em .5em .2em;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	border-radius: .3em;
+	box-shadow: 0 0.05em 0.2em rgba(0, 0, 0, 0.2) inset;
+	background: rgba(26, 26, 26, 0.05);
+	width: 100% !important;
+	box-sizing: border-box;
+	font: 150% Consolas, Monaco, monospace;
+}
+
+.out-of-gamut [property=colorRGB] {
+	border-color: rgba(200, 0, 0, 0.5);
+}
+
+.out-of-gamut-warning {
+	color: #b00;
+	font-weight: bold;
+	font-size: smaller;
+	text-transform: initial;
+}
+
+.out-of-gamut-warning::before {
+	content: "⚠️ ";
+	filter: contrast(2) hue-rotate(-60deg);
+}
+
+[mv-app]:not(.out-of-gamut) .out-of-gamut-warning {
+	display: none;
+}
+
+main > footer {
+	background: rgba(0,0,30,.05);
+	padding: inherit;
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+	margin: -1.5rem;
+	margin-top: 1rem;
+	color: rgba(0,0,30,.6);
+	font-size: smaller;
+}
+
+	main > footer a {
+		font-weight: bold;
+	}

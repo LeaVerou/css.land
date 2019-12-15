@@ -31,31 +31,32 @@
 	</label>
 	<label class="[if(!isLCH_within_sRGB(lightness, chroma, hue), 'out-of-gamut')]" style="--color: [colorRGB]"><abbr>sRGB</abbr> Color
 		<input property="colorRGB" value="[LCH_to_sRGB_string(lightness, chroma, hue)]" readonly />
-		<div class="out-of-gamut-warning">Out of sRGB gamut, displaying [LCH_to_sRGB_string_clipped(lightness, chroma, hue)]</div>
+		<div class="out-of-gamut-warning">Out of sRGB gamut, displaying [LCH_to_sRGB_string(lightness, chroma, hue, true)]</div>
 	</label>
 	<label class="[if(!isLCH_within_P3(lightness, chroma, hue), 'out-of-gamut')]">P3 Color
 		<input property="colorP3" value="[LCH_to_P3_string(lightness, chroma, hue)]" readonly />
 		<div class="out-of-gamut-warning">Out of P3 gamut, not displayable on most screens as of 2019</div>
 	</label>
 	<section>
-		<h2>Stored colors <button mv-action="add(group(lightness: lightness, chroma: chroma, hue: hue), storedColor)">+ Add</button></h2>
-		<div property="storedColor" mv-multiple style="--color: [LCH_to_sRGB_string(lightness, chroma, hue)]" mv-mode="edit" mv-group
-		>
-			<span data-letter="L">[lightness]</span>
-			<span data-letter="C">[chroma]</span>
-			<span data-letter="H">[hue]</span>
-			<span mv-action="set(lchPicker.lightness, lightness), set(lchPicker.chroma, chroma), set(lchPicker.hue, hue)"></span>
+		<h2>
+			Stored colors
+			<button mv-action="add(group(lightness: lightness, chroma: chroma, hue: hue), storedColor)">+ Add current</button>
+			<button mv-action="clear(storedColor)" class="clear">&times; Clear All</button>
+		</h2>
+		<div id="stored">
+			<div property="storedColor" mv-multiple style="--color: [LCH_to_sRGB_string(lightness, chroma, hue)]" mv-mode="edit" mv-group>
+				<span property="name" mv-default="Light red"></span>
+				<span data-letter="L">[lightness]</span>
+				<span data-letter="C">[chroma]</span>
+				<span data-letter="H">[hue]</span>
+				<span mv-action="set(lchPicker.lightness, lightness), set(lchPicker.chroma, chroma), set(lchPicker.hue, hue)"></span>
+			</div>
 		</div>
+
 	</section>
 </main>
 
 <script>
-function LCH_to_sRGB_string(l, c, h) {
-	return "rgb(" + LCH_to_sRGB([+l, +c, +h]).map(x => {
-		x = Math.round(x * 10000)/100;
-		return x + "%";
-	}).join(", ") + ")"
-}
 
 function LCH_to_P3_string(l, c, h) {
 	return "color(display-p3 " + LCH_to_P3([+l, +c, +h]).map(x => {
@@ -64,10 +65,14 @@ function LCH_to_P3_string(l, c, h) {
 	}).join(" ") + ")"
 }
 
-function LCH_to_sRGB_string_clipped(l, c, h) {
+function LCH_to_sRGB_string(l, c, h, clip) {
 	return "rgb(" + LCH_to_sRGB([+l, +c, +h]).map(x => {
 		x = Math.round(x * 10000)/100;
-		x = Math.min(100, Math.max(0, x));
+
+		if (clip) {
+			x = Math.min(100, Math.max(0, x));
+		}
+
 		return x + "%";
 	}).join(", ") + ")"
 }
@@ -88,6 +93,10 @@ function slider_stops(range, l, c, h, index) {
 		args[index] = x;
 		return LCH_to_sRGB_string(...args);
 	}).join(", ")
+}
+
+function LCH_name(l, c, h) {
+
 }
 </script>
 </body>

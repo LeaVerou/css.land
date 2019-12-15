@@ -130,10 +130,17 @@ main > footer {
 		font-weight: bold;
 	}
 
+#stored {
+	display: grid;
+	grid-template-columns: repeat( auto-fit, minmax(8em, 1fr) );
+}
+
 [property="storedColor"] {
 	position: relative;
-	display: inline-flex;
-	padding: 1em;
+	display: inline-grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-gap: .2em;
+	padding: .8em;
 	margin: 0 .8em 0 0;
 	border: 8px solid white;
 	background: var(--color);
@@ -144,37 +151,58 @@ main > footer {
 	text-shadow: 0 0 .1em black;
 }
 
-[property="storedColor"] > span {
-	display: block;
-	margin: 0 .4em;
-}
-
-	[property="storedColor"] > span::before {
-		content: attr(data-letter) " ";
-		font-weight: 300;
+	[property="storedColor"] > span {
+		display: block;
 	}
 
-[property="storedColor"] > [mv-action] {
-	position: absolute;
-	top: 0; right: 0; bottom: 0; left: 0;
-	cursor: pointer;
-}
+		[property="storedColor"] > span::before {
+			content: attr(data-letter) " ";
+			font-weight: 300;
+		}
+
+	[property="storedColor"] > [mv-action] {
+		position: absolute;
+		top: 0; right: 0; bottom: 0; left: 0;
+		cursor: pointer;
+	}
+
+	[property="storedColor"] [property="name"] {
+		max-width: 7em;
+		position: relative;
+		z-index: 1;
+		grid-column-end: span 3;
+	}
 
 
 .mv-add.mv-add.mv-add.mv-add {
 	display: none;
 }
 
-h2 button {
-	padding: .4em .6em;
-	border: 0;
-	background: rgba(0,0,0,.15);
-	border-radius: .3em;
-	font-weight: bold;
-	text-transform: uppercase;
-	cursor: pointer;
+h2 {
+	display: flex;
+	line-height: 1;
 }
 
-	h2 button:hover {
-		background: rgba(0,0,0,.25);
+	h2 button {
+		padding: .4em .6em;
+		border: 0;
+		margin: 0 .5em;
+		background: rgba(0,0,0,.15);
+		border-radius: .3em;
+		font-weight: bold;
+		text-transform: uppercase;
+		cursor: pointer;
 	}
+
+		h2 button:hover {
+			background: rgba(0,0,0,.25);
+		}
+
+		h2 .clear {
+			margin-left: auto;
+		}
+
+		h2 .clear:hover {
+			background: #c00;
+			color: white;
+		}

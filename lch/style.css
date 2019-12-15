@@ -16,14 +16,6 @@ h1 {
 	letter-spacing: -.05em;
 }
 
-a {
-	color: inherit;
-}
-
-	a:not(:hover):not(:focus):not(:active) {
-		text-decoration: none;
-	}
-
 main {
 	padding: 1.5em;
 	border-radius: .5em;
@@ -53,7 +45,7 @@ input[type=range] {
 	width: 100%;
 	-moz-appearance: none;
 	-webkit-appearance: none;
-	background: transparent;
+	background: linear-gradient(to right, var(--stops)) transparent;
 	height: 2.2em;
 	border-radius: .3em;
 	box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
@@ -92,7 +84,18 @@ input[property^=color] {
 	font: 150% Consolas, Monaco, monospace;
 }
 
-.out-of-gamut [property=colorRGB] {
+input[property^=color] {
+	padding: .3em .5em .2em;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	border-radius: .3em;
+	box-shadow: 0 0.05em 0.2em rgba(0, 0, 0, 0.2) inset;
+	background: rgba(26, 26, 26, 0.05);
+	width: 100% !important;
+	box-sizing: border-box;
+	font: 150% Consolas, Monaco, monospace;
+}
+
+.out-of-gamut input {
 	border-color: rgba(200, 0, 0, 0.5);
 }
 
@@ -105,10 +108,10 @@ input[property^=color] {
 
 .out-of-gamut-warning::before {
 	content: "⚠️ ";
-	filter: contrast(2) hue-rotate(-60deg);
+	filter: invert() hue-rotate(-200deg);
 }
 
-[mv-app]:not(.out-of-gamut) .out-of-gamut-warning {
+label:not(.out-of-gamut) .out-of-gamut-warning {
 	display: none;
 }
 

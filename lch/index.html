@@ -4,15 +4,15 @@
 	<meta charset="UTF-8">
 	<title>LCH Colour picker</title>
 	<meta name="viewport" content="initial-scale=1">
-	<link rel="stylesheet" href="https://dev.mavo.io/dist/mavo.css">
+	<link rel="stylesheet" href="https://get.mavo.io/mavo.css">
 	<link rel="stylesheet" href="style.css">
-	<script src="https://dev.mavo.io/dist/mavo.es5.js"></script>
+	<script src="https://get.mavo.io/mavo.es5.js"></script>
 	<script src="https://drafts.csswg.org/css-color-4/math.js"></script>
 	<script src="https://drafts.csswg.org/css-color-4/conversions.js"></script>
 	<script src="https://drafts.csswg.org/css-color-4/utilities.js"></script>
 </head>
 <body>
-	<main mv-storage="local" mv-app="lchPicker" mv-autosave="0" style="--color: [colorRGB]">
+	<main mv-storage="local" mv-app="lchPicker" mv-autosave style="--color: [colorRGB]">
 		<h1>LCH Colour Picker</h1>
 		<label>Lightness (0-100)
 			<input type="range" property="lightness"
@@ -39,10 +39,12 @@
 	</label>
 	<section>
 		<h2>Stored colors <button mv-action="add(group(lightness: lightness, chroma: chroma, hue: hue), storedColor)">+ Add</button></h2>
-		<div property="storedColor" mv-multiple style="--color: [LCH_to_sRGB_string(lightness, chroma, hue)]" mv-mode="edit">
-			<span property="lightness" mv-edit-type="range" mv-attribute="content">[lightness]</span>
-			<span property="chroma" mv-edit-type="range" mv-edit-max="132" mv-attribute="content">[chroma]</span>
-			<span property="hue" mv-edit-type="range" mv-edit-max="<360></360>" mv-attribute="content">[hue]</span>
+		<div property="storedColor" mv-multiple style="--color: [LCH_to_sRGB_string(lightness, chroma, hue)]" mv-mode="edit" mv-group
+		>
+			<span data-letter="L">[lightness]</span>
+			<span data-letter="C">[chroma]</span>
+			<span data-letter="H">[hue]</span>
+			<span mv-action="set(lchPicker.lightness, lightness), set(lchPicker.chroma, chroma), set(lchPicker.hue, hue)"></span>
 		</div>
 	</section>
 </main>

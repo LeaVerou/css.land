@@ -131,11 +131,11 @@ main > footer {
 	}
 
 [property="storedColor"] {
-	display: inline-block;
-	padding: .5em 2em;
-	width: 2em;
+	position: relative;
+	display: inline-flex;
+	padding: 1em;
 	margin: 0 .8em 0 0;
-	border: 10px solid white;
+	border: 8px solid white;
 	background: var(--color);
 	box-shadow: .05em .05em .1em rgba(0,0,0,.2);
 	font-weight: bold;
@@ -146,7 +146,20 @@ main > footer {
 
 [property="storedColor"] > span {
 	display: block;
+	margin: 0 .4em;
 }
+
+	[property="storedColor"] > span::before {
+		content: attr(data-letter) " ";
+		font-weight: 300;
+	}
+
+[property="storedColor"] > [mv-action] {
+	position: absolute;
+	top: 0; right: 0; bottom: 0; left: 0;
+	cursor: pointer;
+}
+
 
 .mv-add.mv-add.mv-add.mv-add {
 	display: none;

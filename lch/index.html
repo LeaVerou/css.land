@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<title>LCH Colour picker</title>
 	<meta name="viewport" content="initial-scale=1">
+	<link rel="stylesheet" href="https://dev.mavo.io/dist/mavo.css">
 	<link rel="stylesheet" href="style.css">
 	<script src="https://dev.mavo.io/dist/mavo.es5.js"></script>
 	<script src="https://drafts.csswg.org/css-color-4/math.js"></script>
@@ -11,7 +12,7 @@
 	<script src="https://drafts.csswg.org/css-color-4/utilities.js"></script>
 </head>
 <body>
-	<main mv-storage="local" mv-app="color-picker" mv-autosave="0" style="--color: [colorRGB]">
+	<main mv-storage="local" mv-app="lchPicker" mv-autosave="0" style="--color: [colorRGB]">
 		<h1>LCH Colour Picker</h1>
 		<label>Lightness (0-100)
 			<input type="range" property="lightness"
@@ -26,7 +27,7 @@
 			       style="--stops: [slider_stops(range(0, 360, 30), lightness, chroma, -1, 2)]" />
 			</label>
 	<label>CSS Color
-		<input property="color" value="lch([lightness]%, [chroma], [hue])" readonly />
+		<input property="color" value="lch([lightness]% [chroma] [hue])" readonly />
 	</label>
 	<label class="[if(!isLCH_within_sRGB(lightness, chroma, hue), 'out-of-gamut')]" style="--color: [colorRGB]"><abbr>sRGB</abbr> Color
 		<input property="colorRGB" value="[LCH_to_sRGB_string(lightness, chroma, hue)]" readonly />
@@ -36,48 +37,56 @@
 		<input property="colorP3" value="[LCH_to_P3_string(lightness, chroma, hue)]" readonly />
 		<div class="out-of-gamut-warning">Out of P3 gamut, not displayable on most screens as of 2019</div>
 	</label>
+	<section>
+		<h2>Stored colors <button mv-action="add(group(lightness: lightness, chroma: chroma, hue: hue), storedColor)">+ Add</button></h2>
+		<div property="storedColor" mv-multiple style="--color: [LCH_to_sRGB_string(lightness, chroma, hue)]" mv-mode="edit">
+			<span property="lightness" mv-edit-type="range" mv-attribute="content">[lightness]</span>
+			<span property="chroma" mv-edit-type="range" mv-edit-max="132" mv-attribute="content">[chroma]</span>
+			<span property="hue" mv-edit-type="range" mv-edit-max="<360></360>" mv-attribute="content">[hue]</span>
+		</div>
+	</section>
 </main>
 
 <script>
-	function LCH_to_sRGB_string(l, c, h) {
-		return "rgb(" + LCH_to_sRGB([+l, +c, +h]).map(x => {
-			x = Math.round(x * 10000)/100;
-			return x + "%";
-		}).join(", ") + ")"
-	}
+function LCH_to_sRGB_string(l, c, h) {
+	return "rgb(" + LCH_to_sRGB([+l, +c, +h]).map(x => {
+		x = Math.round(x * 10000)/100;
+		return x + "%";
+	}).join(", ") + ")"
+}
 
-	function LCH_to_P3_string(l, c, h) {
-		return "color(display-p3, " + LCH_to_P3([+l, +c, +h]).map(x => {
-			x = Math.round(x * 10000)/100;
-			return x;
-		}).join(" ") + ")"
-	}
+function LCH_to_P3_string(l, c, h) {
+	return "color(display-p3 " + LCH_to_P3([+l, +c, +h]).map(x => {
+		x = Math.round(x * 10000)/100;
+		return x;
+	}).join(" ") + ")"
+}
 
-	function LCH_to_sRGB_string_clipped(l, c, h) {
-		return "rgb(" + LCH_to_sRGB([+l, +c, +h]).map(x => {
-			x = Math.round(x * 10000)/100;
-			x = Math.min(100, Math.max(0, x));
-			return x + "%";
-		}).join(", ") + ")"
-	}
+function LCH_to_sRGB_string_clipped(l, c, h) {
+	return "rgb(" + LCH_to_sRGB([+l, +c, +h]).map(x => {
+		x = Math.round(x * 10000)/100;
+		x = Math.min(100, Math.max(0, x));
+		return x + "%";
+	}).join(", ") + ")"
+}
 
-	function isLCH_within_sRGB(l, c, h) {
-		var rgb = LCH_to_sRGB([+l, +c, +h]);
-		return rgb.reduce((a, b) => a && b >= 0 && b <= 1, true);
-	}
+function isLCH_within_sRGB(l, c, h) {
+	var rgb = LCH_to_sRGB([+l, +c, +h]);
+	return rgb.reduce((a, b) => a && b >= 0 && b <= 1, true);
+}
 
-	function isLCH_within_P3(l, c, h) {
-		var rgb = LCH_to_P3([+l, +c, +h]);
-		return rgb.reduce((a, b) => a && b >= 0 && b <= 1, true);
-	}
+function isLCH_within_P3(l, c, h) {
+	var rgb = LCH_to_P3([+l, +c, +h]);
+	return rgb.reduce((a, b) => a && b >= 0 && b <= 1, true);
+}
 
-	function slider_stops(range, l, c, h, index) {
-		return range.map(x => {
-			args = [l, c, h];
-			args[index] = x;
-			return LCH_to_sRGB_string(...args);
-		}).join(", ")
-	}
+function slider_stops(range, l, c, h, index) {
+	return range.map(x => {
+		args = [l, c, h];
+		args[index] = x;
+		return LCH_to_sRGB_string(...args);
+	}).join(", ")
+}
 </script>
 </body>
 </html>

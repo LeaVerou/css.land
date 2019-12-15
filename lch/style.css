@@ -109,7 +109,7 @@ input[property^=color] {
 }
 
 [mv-app]:not(.out-of-gamut) .out-of-gamut-warning {
-	display: none;
+	visibility: hidden;
 }
 
 main > footer {

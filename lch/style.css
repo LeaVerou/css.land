@@ -1,4 +1,9 @@
 body {
+	display: flex;
+	align-items: flex-start;
+	justify-content: center;
+	box-sizing: border-box;
+	height: 100vh;
 	padding: 1em;
 	margin: 0;
 	font: 100%/1.6 Helvetica Neue, sans-serif;

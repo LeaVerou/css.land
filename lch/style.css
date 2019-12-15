@@ -1,9 +1,4 @@
 body {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	box-sizing: border-box;
-	height: 100vh;
 	padding: 1em;
 	margin: 0;
 	font: 100%/1.6 Helvetica Neue, sans-serif;
@@ -109,7 +104,7 @@ input[property^=color] {
 }
 
 [mv-app]:not(.out-of-gamut) .out-of-gamut-warning {
-	visibility: hidden;
+	display: none;
 }
 
 main > footer {

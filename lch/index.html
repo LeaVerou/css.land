@@ -17,18 +17,21 @@
 			LCH Colour Picker
 			<!-- <span class="name">[LCH_name(lightness, chroma, hue)]</span> -->
 		</h1>
-		<label>Lightness (0-100)
-			<input type="range" property="lightness"
+		<label class="color-slider-label">Lightness (0-100)
+			<input class="color-slider" type="range" property="lightness" mv-default="[lightnessNumber]"
 			       style="--stops: [slider_stops(range(0, 100, 20), -1, chroma, hue, 0)]" />
+			<input type="number" property="lightnessNumber" mv-default="[lightness]" style="--percentage: [lightness / 100]" max="100" />
 		</label>
-		<label>Chroma (0-132)
-			<input type="range" property="chroma"
+		<label class="color-slider-label">Chroma (0-132)
+			<input class="color-slider" type="range" property="chroma" mv-default="[chromaNumber]"
 			       style="--stops: [slider_stops(range(0, 132, 132 / 5), lightness, -1, hue, 1)]" max="132" />
+			<input type="number" property="chromaNumber" mv-default="[chroma]" style="--percentage: [chroma / 132]" max="132" />
 		</label>
-		<label>Hue (0-360)
-			<input type="range" property="hue" max="360"
+		<label class="color-slider-label">Hue (0-360)
+			<input class="color-slider" type="range" property="hue" max="360" mv-default="[hueNumber]"
 			       style="--stops: [slider_stops(range(0, 360, 30), lightness, chroma, -1, 2)]" />
-			</label>
+			<input type="number" property="hueNumber" mv-default="[hue]" style="--percentage: [hue / 360]" max="360" />
+		</label>
 	<label>CSS Color
 		<input property="color" value="lch([lightness]% [chroma] [hue])" readonly />
 	</label>

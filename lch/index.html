@@ -71,7 +71,7 @@
 
 function LCH_to_P3_string(l, c, h) {
 	return "color(display-p3 " + LCH_to_P3([+l, +c, +h]).map(x => {
-		x = Math.round(x * 10000)/100;
+		x = Math.round(x * 10000)/10000;
 		return x;
 	}).join(" ") + ")"
 }

@@ -4,7 +4,7 @@ body {
 	justify-content: center;
 	box-sizing: border-box;
 	height: 100vh;
-	padding: 2em;
+	padding: 1em 2em;
 	margin: 0;
 	font: 100%/1.6 Helvetica Neue, sans-serif;
 }
@@ -36,7 +36,7 @@ main {
 	border-radius: .5em;
 	width: 40em;
 	max-width: 90vw;
-	margin: 0 auto;
+	margin: 1em auto;
 	background: #f0f0f0;
 	box-shadow: .05em .05em .1em rgba(0,0,0,.2), 0 0 0 100vmax var(--color);
 }
@@ -172,6 +172,7 @@ main > footer {
 }
 
 	main > footer a {
+		color: inherit;
 		font-weight: bold;
 	}
 

@@ -51,7 +51,8 @@
 			<button mv-action="clear(storedColor)" class="clear">&times; Clear All</button>
 		</h2>
 		<div id="stored">
-			<div property="storedColor" mv-multiple style="--color: [LCH_to_sRGB_string(lightness, chroma, hue)]" mv-mode="edit" mv-group>
+			<div property="storedColor" mv-multiple mv-initial-items="0"
+			style="--color: [LCH_to_sRGB_string(lightness, chroma, hue)]" mv-mode="edit" mv-group>
 				<span property="name" mv-default="[LCH_name(lightness, chroma, hue)]"></span>
 				<span data-letter="L">[lightness]</span>
 				<span data-letter="C">[chroma]</span>

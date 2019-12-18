@@ -16,7 +16,7 @@
 	mv-init='data:application/json,{"lightness": 50, "chroma": 50, "hue": 50}'>
 		<h1>
 			LCH Colour Picker
-			<!-- <span class="name">[LCH_name(lightness, chroma, hue)]</span> -->
+			<span class="name">[LCH_name(lightness, chroma, hue)]</span>
 		</h1>
 		<label class="color-slider-label">Lightness (0-100)
 			<input class="color-slider" type="range" property="lightness" mv-default="[lightnessNumber]"
@@ -155,7 +155,7 @@ function LCH_name(l, c, h) {
 
 	ret = ret.join(" ");
 
-	if (/Dark.+Yellow/.test(ret)) {
+	if (/Yellow$/.test(ret) && l < 40) {
 		// Dark Yellow is an oxymoron
 		ret = "Brown";
 	}

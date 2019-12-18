@@ -12,7 +12,8 @@
 	<script src="https://drafts.csswg.org/css-color-4/utilities.js"></script>
 </head>
 <body>
-	<main mv-storage="local" mv-app="lchPicker" mv-autosave style="--color: [colorRGB]">
+	<main mv-storage="local" mv-app="lchPicker" mv-autosave style="--color: [colorRGB]"
+	mv-init='data:application/json,{"lightness": 50, "chroma": 50, "hue": 50}'>
 		<h1>
 			LCH Colour Picker
 			<!-- <span class="name">[LCH_name(lightness, chroma, hue)]</span> -->

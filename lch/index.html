@@ -13,7 +13,10 @@
 </head>
 <body>
 	<main mv-storage="local" mv-app="lchPicker" mv-autosave style="--color: [colorRGB]">
-		<h1>LCH Colour Picker</h1>
+		<h1>
+			LCH Colour Picker
+			<!-- <span class="name">[LCH_name(lightness, chroma, hue)]</span> -->
+		</h1>
 		<label>Lightness (0-100)
 			<input type="range" property="lightness"
 			       style="--stops: [slider_stops(range(0, 100, 20), -1, chroma, hue, 0)]" />
@@ -45,7 +48,7 @@
 		</h2>
 		<div id="stored">
 			<div property="storedColor" mv-multiple style="--color: [LCH_to_sRGB_string(lightness, chroma, hue)]" mv-mode="edit" mv-group>
-				<span property="name" mv-default="Light red"></span>
+				<span property="name" mv-default="[LCH_name(lightness, chroma, hue)]"></span>
 				<span data-letter="L">[lightness]</span>
 				<span data-letter="C">[chroma]</span>
 				<span data-letter="H">[hue]</span>
@@ -95,8 +98,61 @@ function slider_stops(range, l, c, h, index) {
 	}).join(", ")
 }
 
+// Produce a default (not very good) name
 function LCH_name(l, c, h) {
+	h = h % 360;
+	var ret = [];
+	var baseColor;
 
+	if (l < 30) {
+		ret.push("Dark");
+	}
+	else if (l > 70) {
+		ret.push("Light");
+	}
+
+	if (c > 10) {
+		if (c < 35) {
+			ret.push("Muted");
+		}
+		else if (c > 70) {
+			ret.push("Bright");
+		}
+
+		// Chromatic
+		for (let [hue, baseColor] of Object.entries({
+			20: "Pink",
+			40: "Red",
+			60: "Orange",
+			100: "Yellow",
+			150: "Green",
+			210: "Cyan",
+			260: "Blue",
+			320: "Purple",
+			360: "Pink"
+		})) {
+			if (h <= hue) {
+				ret.push(baseColor);
+				break;
+			}
+		}
+	}
+	else {
+		if (c > 1) {
+			ret.unshift(h < 120 || h > 300? "Warm": "Cool");
+		}
+
+		ret.push("Gray");
+	}
+
+	ret = ret.join(" ");
+
+	if (/Dark.+Yellow/.test(ret)) {
+		// Dark Yellow is an oxymoron
+		ret = "Brown";
+	}
+
+	return ret;
 }
 </script>
 </body>

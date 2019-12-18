@@ -10,11 +10,21 @@ body {
 }
 
 h1 {
+	display: flex;
+	align-items: center;
 	margin: 0 0 .5em;
 	font-size: 300%;
 	line-height: 1;
 	letter-spacing: -.05em;
 }
+
+	h1 .name {
+		margin-left: auto;
+		font-size: 50%;
+		letter-spacing: normal;
+		opacity: .3;
+		font-weight: normal;
+	}
 
 main {
 	padding: 1.5em;
@@ -132,7 +142,8 @@ main > footer {
 
 #stored {
 	display: grid;
-	grid-template-columns: repeat( auto-fit, minmax(8em, 1fr) );
+	grid-template-columns: repeat( auto-fill, minmax(10em, 1fr) );
+	grid-gap: .5em;
 }
 
 [property="storedColor"] {
@@ -141,7 +152,6 @@ main > footer {
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-gap: .2em;
 	padding: .8em;
-	margin: 0 .8em 0 0;
 	border: 8px solid white;
 	background: var(--color);
 	box-shadow: .05em .05em .1em rgba(0,0,0,.2);
@@ -167,6 +177,7 @@ main > footer {
 	}
 
 	[property="storedColor"] [property="name"] {
+		display: block;
 		max-width: 7em;
 		position: relative;
 		z-index: 1;

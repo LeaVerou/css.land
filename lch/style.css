@@ -178,7 +178,7 @@ main > footer {
 
 	[property="storedColor"] [property="name"] {
 		display: block;
-		max-width: 7em;
+		max-width: 100%;
 		position: relative;
 		z-index: 1;
 		grid-column-end: span 3;

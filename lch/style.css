@@ -226,28 +226,8 @@ main > footer {
 	[property="storedColor"] .gamut {
 		font-size: 70%;
 		font-weight: bold;
-		opacity: .5;
+		grid-column-end: span 3;
 	}
-
-	[property="storedColor"] .gamut.outside {
-		opacity: 1;
-	}
-
-	[property="storedColor"].dark .gamut.outside {
-		color: rgba(100%, 80%, 80%);
-	}
-
-	[property="storedColor"] .gamut.outside {
-		color: rgba(40%, 0%, 0%);
-	}
-
-		[property="storedColor"] .gamut::before {
-			content: "✓ "
-		}
-
-		[property="storedColor"] .gamut.outside::before {
-			content: "✘ "
-		}
 
 
 .mv-add.mv-add.mv-add.mv-add {

@@ -60,8 +60,9 @@
 				<span data-letter="H">[hue]</span>
 				<span mv-action="set(lchPicker.lightness, lightness), set(lchPicker.chroma, chroma), set(lchPicker.hue, hue)"></span>
 
-				<span class="gamut [if(!isLCH_within_sRGB(lightness, chroma, hue), 'outside')]">sRGB</span>
-				<span class="gamut [if(!isLCH_within_P3(lightness, chroma, hue), 'outside')]" style="grid-column: 3">P3</span>
+				<span class="gamut">
+					[if(isLCH_within_sRGB(lightness, chroma, hue), 'sRGB', if(isLCH_within_P3(lightness, chroma, hue), 'P3', 'outside P3'))]
+				</span>
 			</div>
 		</div>
 	</section>

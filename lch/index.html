@@ -52,12 +52,16 @@
 		</h2>
 		<div id="stored">
 			<div property="storedColor" mv-multiple mv-initial-items="0"
-			style="--color: [LCH_to_sRGB_string(lightness, chroma, hue)]" mv-mode="edit" mv-group>
+			style="--color: [LCH_to_sRGB_string(lightness, chroma, hue)]" mv-mode="edit" mv-group
+			class="[if(lightness > 70, 'light', 'dark')]">
 				<span property="name" mv-default="[LCH_name(lightness, chroma, hue)]"></span>
 				<span data-letter="L">[lightness]</span>
 				<span data-letter="C">[chroma]</span>
 				<span data-letter="H">[hue]</span>
 				<span mv-action="set(lchPicker.lightness, lightness), set(lchPicker.chroma, chroma), set(lchPicker.hue, hue)"></span>
+
+				<span class="gamut [if(!isLCH_within_sRGB(lightness, chroma, hue), 'outside')]">sRGB</span>
+				<span class="gamut [if(!isLCH_within_P3(lightness, chroma, hue), 'outside')]" style="grid-column: 3">P3</span>
 			</div>
 		</div>
 	</section>
@@ -112,7 +116,7 @@ function LCH_name(l, c, h) {
 	var ret = [];
 	var baseColor;
 
-	if (l < 30) {
+	if (l < 35) {
 		ret.push("Dark");
 	}
 	else if (l > 70) {
@@ -124,7 +128,9 @@ function LCH_name(l, c, h) {
 			ret.push("Muted");
 		}
 		else if (c > 70) {
-			ret.push("Bright");
+			if (l > 60 ) {
+				ret.push("Bright");
+			}
 		}
 
 		// Chromatic

@@ -52,15 +52,16 @@
 
 	<section>
 		<h2>
-			Stored colors
+			Saved colors
 			<button mv-action="add(group(lightness: lightness, chroma: chroma, hue: hue, alpha: alpha), storedColor)">+ Add current</button>
-			<button mv-action="clear(storedColor)" class="clear">&times; Clear All</button>
+			<button mv-action="clear(storedColor)" class="clear" mv-if="count(storedColor) > 0">&times; Clear All</button>
 		</h2>
-		<div id="stored">
+		<div id="saved">
 			<div property="storedColor" mv-multiple mv-initial-items="0"
-			style="--color: [LCH_to_sRGB_string(lightness, chroma, hue, alpha)]" mv-mode="edit" mv-group
+			style="--color: [rgbstring]" mv-mode="edit" mv-group
 			class="[if(lightness > 70 or alpha < 60, 'light', 'dark')]">
 				<span property="name" mv-default="[LCH_name(lightness, chroma, hue)]"></span>
+				<meta property="rgbstring" content="[LCH_to_sRGB_string(lightness, chroma, hue, alpha)]" />
 				<span data-letter="L">[lightness]</span>
 				<span data-letter="C">[chroma]</span>
 				<span data-letter="H">[hue]</span>
@@ -72,6 +73,8 @@
 				</span>
 			</div>
 		</div>
+		<h2>Gradient</h2>
+		<div id="gradient" style="--stops: [rgbstring]"></div>
 	</section>
 	<footer>
 		Made by <a href="http://lea.verou.me">Lea Verou</a> with <a href="https://mavo.io">Mavo</a>.

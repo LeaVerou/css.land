@@ -16,6 +16,7 @@
 	mv-init='data:application/json,{"lightness": 50, "chroma": 50, "hue": 50, "alpha": 100}'>
 		<h1>
 			LCH Colour Picker
+			<button mv-action="set(lchPicker, importColor())">Import…</button>
 			<span class="name">[LCH_name(lightness, chroma, hue)]</span>
 		</h1>
 		<label class="color-slider-label">Lightness (0-100)
@@ -45,142 +46,51 @@
 		<input property="colorRGB" value="[LCH_to_sRGB_string(lightness, chroma, hue, alpha)]" readonly />
 		<div class="out-of-gamut-warning">Out of sRGB gamut, displaying [LCH_to_sRGB_string(lightness, chroma, hue, alpha, true)]</div>
 	</label>
-	<label class="[if(!isLCH_within_P3(lightness, chroma, hue), 'out-of-gamut')]">P3 Color
-		<input property="colorP3" value="[LCH_to_P3_string(lightness, chroma, hue)]" readonly />
-		<div class="out-of-gamut-warning">Out of P3 gamut, not displayable on most screens as of 2019</div>
-	</label>
 
-	<section>
-		<h2>
-			Saved colors
-			<button mv-action="add(group(lightness: lightness, chroma: chroma, hue: hue, alpha: alpha), storedColor)">+ Add current</button>
-			<button mv-action="clear(storedColor)" class="clear" mv-if="count(storedColor) > 0">&times; Clear All</button>
-		</h2>
-		<div id="saved">
-			<div property="storedColor" mv-multiple mv-initial-items="0"
-			style="--color: [rgbstring]" mv-mode="edit" mv-group
-			class="[if(lightness > 70 or alpha < 60, 'light', 'dark')]">
-				<span property="name" mv-default="[LCH_name(lightness, chroma, hue)]"></span>
-				<meta property="rgbstring" content="[LCH_to_sRGB_string(lightness, chroma, hue, alpha)]" />
-				<span data-letter="L">[lightness]</span>
-				<span data-letter="C">[chroma]</span>
-				<span data-letter="H">[hue]</span>
-				<span data-letter="A">[alpha]</span>
-				<span mv-action="set(lchPicker.lightness, lightness), set(lchPicker.chroma, chroma), set(lchPicker.hue, hue), set(lchPicker.alpha, alpha)"></span>
+	<details mv-attribute="open" property="showAdvanced" mv-mode="read">
+		<summary>Advanced</summary>
+		<label class="[if(!isLCH_within_P3(lightness, chroma, hue), 'out-of-gamut')]">P3 Color
+			<input property="colorP3" value="[LCH_to_P3_string(lightness, chroma, hue)]" readonly />
+			<div class="out-of-gamut-warning">Out of P3 gamut, not displayable on most screens as of 2019</div>
+		</label>
 
-				<span class="gamut">
-					[if(isLCH_within_sRGB(lightness, chroma, hue), 'sRGB', if(isLCH_within_P3(lightness, chroma, hue), 'P3', 'outside P3'))]
-				</span>
+		<section>
+			<h2>
+				Saved colors
+				<button mv-action="add(group(lightness: lightness, chroma: chroma, hue: hue, alpha: alpha), storedColor)">+ Add current</button>
+				<button mv-action="clear(storedColor)" class="clear" mv-if="count(storedColor) > 0">&times; Clear All</button>
+			</h2>
+			<div id="saved">
+				<div property="storedColor" mv-multiple mv-initial-items="0"
+				     style="--color: [rgbstring]" mv-mode="edit" mv-group
+				     class="[if(lightness > 70 or alpha < 60, 'light', 'dark')]">
+					<span property="name" mv-default="[LCH_name(lightness, chroma, hue)]"></span>
+					<meta property="rgbstring" content="[LCH_to_sRGB_string(lightness, chroma, hue, alpha)]" />
+					<span data-letter="L">[lightness]</span>
+					<span data-letter="C">[chroma]</span>
+					<span data-letter="H">[hue]</span>
+					<span data-letter="A">[alpha]</span>
+					<span mv-action="set(lchPicker, storedColor)"></span>
+
+					<span class="gamut">
+						[if(isLCH_within_sRGB(lightness, chroma, hue), 'sRGB', if(isLCH_within_P3(lightness, chroma, hue), 'P3', 'outside P3'))]
+					</span>
+				</div>
 			</div>
-		</div>
-	</section>
-	<section mv-if="count(storedColor) >= 2">
-		<h2>Gradient</h2>
-		<div id="gradient" style="--stops: [rgbstring]"></div>
-	</section>
+		</section>
+		<section mv-if="count(storedColor) >= 2">
+			<h2>Gradient</h2>
+			<div id="gradient" style="--stops: [storedColor.rgbstring]"></div>
+		</section>
+	</details>
+
 	<footer>
 		Made by <a href="http://lea.verou.me">Lea Verou</a> with <a href="https://mavo.io">Mavo</a>.
 		Conversion logic by <a href="https://svgees.us">Chris Lilley</a>.
 	</footer>
 </main>
 
-<script>
+<script src="lch.js"></script>
 
-function LCH_to_P3_string(l, c, h, a = 100) {
-	return "color(display-p3 " + LCH_to_P3([+l, +c, +h]).map(x => {
-		x = Math.round(x * 10000)/10000;
-		return x;
-	}).join(" ") + (a < 100? `/ ${a}%` : "") + ")"
-}
-
-function LCH_to_sRGB_string(l, c, h, a = 100, clip = false) {
-	return "rgb(" + LCH_to_sRGB([+l, +c, +h]).map(x => {
-		x = Math.round(x * 10000)/100;
-
-		if (clip) {
-			x = Math.min(100, Math.max(0, x));
-		}
-
-		return x + "%";
-	}).join(" ") + (a < 100? ` / ${a}%` : "") + ")"
-}
-
-function isLCH_within_sRGB(l, c, h) {
-	var rgb = LCH_to_sRGB([+l, +c, +h]);
-	return rgb.reduce((a, b) => a && b >= 0 && b <= 1, true);
-}
-
-function isLCH_within_P3(l, c, h) {
-	var rgb = LCH_to_P3([+l, +c, +h]);
-	return rgb.reduce((a, b) => a && b >= 0 && b <= 1, true);
-}
-
-function slider_stops(range, l, c, h, a, index) {
-	return range.map(x => {
-		args = [l, c, h, a];
-		args[index] = x;
-		return LCH_to_sRGB_string(...args);
-	}).join(", ")
-}
-
-// Produce a default (not very good) name
-function LCH_name(l, c, h) {
-	h = h % 360;
-	var ret = [];
-	var baseColor;
-
-	if (l < 35) {
-		ret.push("Dark");
-	}
-	else if (l > 70) {
-		ret.push("Light");
-	}
-
-	if (c > 10) {
-		if (c < 35) {
-			ret.push("Muted");
-		}
-		else if (c > 70) {
-			if (l > 60 ) {
-				ret.push("Bright");
-			}
-		}
-
-		// Chromatic
-		for (let [hue, baseColor] of Object.entries({
-			20: "Pink",
-			40: "Red",
-			60: "Orange",
-			100: "Yellow",
-			150: "Green",
-			210: "Cyan",
-			260: "Blue",
-			320: "Purple",
-			360: "Pink"
-		})) {
-			if (h <= hue) {
-				ret.push(baseColor);
-				break;
-			}
-		}
-	}
-	else {
-		if (c > 1) {
-			ret.unshift(h < 120 || h > 300? "Warm": "Cool");
-		}
-
-		ret.push("Gray");
-	}
-
-	ret = ret.join(" ");
-
-	if (/Yellow$/.test(ret) && l < 40) {
-		// Dark Yellow is an oxymoron
-		ret = "Brown";
-	}
-
-	return ret;
-}
-</script>
 </body>
 </html>

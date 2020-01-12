@@ -39,6 +39,11 @@ h1 {
 		font-weight: normal;
 	}
 
+	h1 button[mv-action] {
+		margin-top: .3em;
+		margin-left: 1em;
+	}
+
 main {
 	padding: 1.5em;
 	border-radius: .5em;
@@ -49,7 +54,8 @@ main {
 	box-shadow: .05em .05em .1em rgba(0,0,0,.2), 0 0 0 100vmax var(--color);
 }
 
-label {
+label,
+details summary {
 	display: block;
 	text-transform: uppercase;
 	font-size: smaller;
@@ -254,7 +260,7 @@ h2 {
 	line-height: 1;
 }
 
-	h2 button {
+	button:not(.mv-ui) {
 		padding: .4em .6em;
 		border: 0;
 		margin: 0 .5em;
@@ -277,3 +283,7 @@ h2 {
 			background: #c00;
 			color: white;
 		}
+
+details {
+	margin-top: 1em;
+}

@@ -41,6 +41,11 @@ function slider_stops(range, l, c, h, a, index) {
 
 function importColor() {
 	var str = prompt("Enter any sRGB color format your browser recognizes");
+
+	if (!str) {
+		return;
+	}
+
 	var dummy = document.createElement("_");
 	document.body.appendChild(dummy);
 	dummy.style.color = str;

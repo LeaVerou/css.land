@@ -13,7 +13,8 @@
 </head>
 <body>
 	<main mv-storage="local" mv-app="lchPicker" mv-autosave style="--color: [colorRGB]"
-	mv-init='data:application/json,{"lightness": 50, "chroma": 50, "hue": 50, "alpha": 100}'>
+	mv-init='data:application/json,{"lightness": 50, "chroma": 50, "hue": 50, "alpha": 100}'
+	class="[if(showAdvanced, 'show-advanced')]">
 		<h1>
 			LCH Colour Picker
 			<button mv-action="set(lchPicker, importColor())">Import…</button>
@@ -39,8 +40,8 @@
 			       style="--stops: [slider_stops(range(0, 100, 50), lightness, chroma, hue, -1, 3)]" />
 			<input type="number" property="alphaNumber" mv-default="[alpha]" style="--percentage: [alpha / 100]" max="100" />
 		</label>
-	<label>CSS Color
-		<input property="color" value="lch([lightness]% [chroma] [hue])" readonly />
+	<label>CSS Color <span class="decimals">(<span property="decimals" mv-mode="edit" mv-edit-type="number" mv-edit-min="0" mv-edit-max="20">3</span> decimals)</span>
+		<input property="color" value="lch([round(lightness, decimals)]% [round(chroma, decimals)] [round(hue, decimals)])" readonly />
 	</label>
 	<label class="[if(!isLCH_within_sRGB(lightness, chroma, hue), 'out-of-gamut')]" style="--color: [colorRGB]"><abbr>sRGB</abbr> Color
 		<input property="colorRGB" value="[LCH_to_sRGB_string(lightness, chroma, hue, alpha)]" readonly />

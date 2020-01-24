@@ -287,3 +287,7 @@ h2 {
 details {
 	margin-top: 1em;
 }
+
+[mv-app]:not(.show-advanced) .decimals {
+	visibility: hidden;
+}

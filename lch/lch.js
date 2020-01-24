@@ -41,12 +41,13 @@ function slider_stops(range, l, c, h, a, index) {
 function importColor() {
 	var str = prompt("Enter any sRGB color format your browser recognizes");
 	var dummy = document.createElement("_");
+	document.body.appendChild(dummy);
 	dummy.style.color = str;
-	var rgbaStr = getComputedStyle(dummy).color || dummy.style.color;
-	console.log(rgbaStr);
+	var rgbaStr = getComputedStyle(dummy).color;
+	// console.log("computed style was", rgbaStr);
 	var rgba = rgbaStr.match(/-?[\d.]+/g).map((x, i) => i < 3? x/255 : +x);
 	var lch = sRGB_to_LCH(rgba.slice(0, 3));
-console.log(lch);
+
 	return {
 		lightness: lch[0],
 		chroma: lch[1],

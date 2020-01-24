@@ -20,13 +20,14 @@ function LCH_to_sRGB_string(l, c, h, a = 100, clip = false) {
 
 function isLCH_within_sRGB(l, c, h) {
 	var rgb = LCH_to_sRGB([+l, +c, +h]);
-	var ε = .000005;
+	const ε = .000005;
 	return rgb.reduce((a, b) => a && b >= (0 - ε) && b <= (1 + ε), true);
 }
 
 function isLCH_within_P3(l, c, h) {
 	var rgb = LCH_to_P3([+l, +c, +h]);
-	return rgb.reduce((a, b) => a && b >= 0 && b <= 1, true);
+	const ε = .000005;
+	return rgb.reduce((a, b) => a && b >= (0 - ε) && b <= (1 + ε), true);
 }
 
 // Generate gradient stops for the sliders

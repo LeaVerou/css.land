@@ -55,6 +55,11 @@
 			<div class="out-of-gamut-warning">Out of P3 gamut, not displayable on most screens as of 2019</div>
 		</label>
 
+		<label class="[if(!isLCH_within_r2020(lightness, chroma, hue), 'out-of-gamut')]">Rec.2020 Color
+			<input property="colorP3" value="[LCH_to_r2020_string(lightness, chroma, hue)]" readonly />
+			<div class="out-of-gamut-warning">Out of Rec.2020 gamut, are you kidding!!</div>
+		</label>
+
 		<section>
 			<h2>
 				Saved colors

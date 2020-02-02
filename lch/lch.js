@@ -1,3 +1,9 @@
+function LCH_to_r2020_string(l, c, h, a = 100) {
+	return "color(rec2020 " + LCH_to_r2020([+l, +c, +h]).map(x => {
+		x = Math.round(x * 10000)/10000;
+		return x;
+	}).join(" ") + (a < 100? `/ ${a}%` : "") + ")"
+}
 
 function LCH_to_P3_string(l, c, h, a = 100) {
 	return "color(display-p3 " + LCH_to_P3([+l, +c, +h]).map(x => {
@@ -26,6 +32,12 @@ function isLCH_within_sRGB(l, c, h) {
 
 function isLCH_within_P3(l, c, h) {
 	var rgb = LCH_to_P3([+l, +c, +h]);
+	const ε = .000005;
+	return rgb.reduce((a, b) => a && b >= (0 - ε) && b <= (1 + ε), true);
+}
+
+function isLCH_within_r2020(l, c, h) {
+	var rgb = LCH_to_r2020([+l, +c, +h]);
 	const ε = .000005;
 	return rgb.reduce((a, b) => a && b >= (0 - ε) && b <= (1 + ε), true);
 }

@@ -1,3 +1,10 @@
+:root {
+	--transparency: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill-opacity=".05">\
+			<rect width="50" height="50" />\
+			<rect x="50" y="50" width="50" height="50" />\
+		</svg>') 0 0 / 20px 20px #f8f8f8;
+}
+
 body {
 	display: flex;
 	align-items: flex-start;
@@ -7,6 +14,7 @@ body {
 	padding: 1em 2em;
 	margin: 0;
 	font: 100%/1.6 Helvetica Neue, sans-serif;
+	background: var(--transparency);
 }
 
 input[type=number]::-webkit-inner-spin-button {
@@ -27,8 +35,13 @@ h1 {
 		margin-left: auto;
 		font-size: 50%;
 		letter-spacing: normal;
-		opacity: .3;
+		opacity: .1;
 		font-weight: normal;
+	}
+
+	h1 button[mv-action] {
+		margin-top: .3em;
+		margin-left: 1em;
 	}
 
 main {
@@ -41,7 +54,8 @@ main {
 	box-shadow: .05em .05em .1em rgba(0,0,0,.2), 0 0 0 100vmax var(--color);
 }
 
-label {
+label,
+details summary {
 	display: block;
 	text-transform: uppercase;
 	font-size: smaller;
@@ -60,7 +74,7 @@ abbr {
 	width: 100%;
 	-moz-appearance: none;
 	-webkit-appearance: none;
-	background: linear-gradient(to right, var(--stops)) transparent;
+	background: linear-gradient(to right, var(--stops)), var(--transparency);
 	height: 2.2em;
 	border-radius: .3em;
 	box-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
@@ -176,7 +190,7 @@ main > footer {
 		font-weight: bold;
 	}
 
-#stored {
+#saved {
 	display: grid;
 	grid-template-columns: repeat( auto-fill, minmax(10em, 1fr) );
 	grid-gap: .5em;
@@ -185,16 +199,19 @@ main > footer {
 [property="storedColor"] {
 	position: relative;
 	display: inline-grid;
-	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-columns: 1fr 1fr;
 	grid-gap: .2em;
 	padding: .8em;
 	border: 8px solid white;
-	background: var(--color);
+	background: linear-gradient(var(--color), var(--color)), var(--transparency);
 	box-shadow: .05em .05em .1em rgba(0,0,0,.2);
 	font-weight: bold;
 	text-align: center;
 	color: white;
-	text-shadow: 0 0 .1em black;
+}
+
+[property="storedColor"].light {
+	color: black;
 }
 
 	[property="storedColor"] > span {
@@ -217,9 +234,22 @@ main > footer {
 		max-width: 100%;
 		position: relative;
 		z-index: 1;
-		grid-column-end: span 3;
+		grid-column-end: span 2;
 	}
 
+	[property="storedColor"] .gamut {
+		font-size: 70%;
+		font-weight: bold;
+		grid-column-end: span 2;
+	}
+
+#gradient {
+	width: 100%;
+	height: 3em;
+	margin-top: 1em;
+	border-radius: 4px;
+	background: linear-gradient(to right, var(--stops)), var(--transparency);
+}
 
 .mv-add.mv-add.mv-add.mv-add {
 	display: none;
@@ -230,7 +260,7 @@ h2 {
 	line-height: 1;
 }
 
-	h2 button {
+	button:not(.mv-ui) {
 		padding: .4em .6em;
 		border: 0;
 		margin: 0 .5em;
@@ -253,3 +283,11 @@ h2 {
 			background: #c00;
 			color: white;
 		}
+
+details {
+	margin-top: 1em;
+}
+
+[mv-app]:not(.show-advanced) .decimals {
+	visibility: hidden;
+}

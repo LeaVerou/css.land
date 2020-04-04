@@ -79,7 +79,7 @@
 					<span mv-action="set(lchPicker, storedColor)"></span>
 
 					<span class="gamut">
-						[if(isLCH_within_sRGB(lightness, chroma, hue), 'sRGB', if(isLCH_within_P3(lightness, chroma, hue), 'P3', 'outside P3'))]
+						[if(isLCH_within_sRGB(lightness, chroma, hue), 'within sRGB', if(isLCH_within_P3(lightness, chroma, hue), 'P3', 'outside P3'))]
 					</span>
 				</div>
 			</div>
@@ -93,6 +93,7 @@
 	<footer>
 		Made by <a href="http://lea.verou.me">Lea Verou</a> with <a href="https://mavo.io">Mavo</a>.
 		Conversion logic by <a href="https://svgees.us">Chris Lilley</a>.
+		<a href="https://github.com/leaverou/css.land">Code on Github</a>
 	</footer>
 </main>
 

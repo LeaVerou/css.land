@@ -14,7 +14,7 @@
 <body>
 	<main mv-storage="local" mv-app="lchPicker" mv-autosave style="--color: [colorRGB]"
 	mv-init='data:application/json,{"lightness": 50, "chroma": 50, "hue": 50, "alpha": 100}'
-	class="[if(showAdvanced, 'show-advanced')]">
+	class="[if(showAdvanced, 'show-advanced')]" mv-mode="read">
 		<h1>
 			LCH Colour Picker
 			<button mv-action="set(lchPicker, importColor())">Import…</button>
@@ -48,7 +48,7 @@
 		<div class="out-of-gamut-warning">Color is actually [LCH_to_sRGB_string(lightness, chroma, hue, alpha)], which is out of sRGB gamut; auto-corrected to sRGB boundary.</div>
 	</label>
 
-	<details mv-attribute="open" property="showAdvanced" mv-mode="read">
+	<details mv-attribute="open" property="showAdvanced">
 		<summary>Advanced</summary>
 		<label class="[if(!isLCH_within_P3(lightness, chroma, hue), 'out-of-gamut')]">P3 Color
 			<input property="colorP3" value="[LCH_to_P3_string(lightness, chroma, hue)]" readonly />
@@ -70,7 +70,7 @@
 				<div property="storedColor" mv-multiple mv-initial-items="0"
 				     style="--color: [rgbstring]" mv-mode="edit" mv-group
 				     class="[if(lightness > 70 or alpha < 60, 'light', 'dark')]">
-					<span property="name" mv-default="[LCH_name(lightness, chroma, hue)]"></span>
+					<span property="name" mv-default="[LCH_name(lightness, chroma, hue)]" mv-mode="edit"></span>
 					<meta property="rgbstring" content="[LCH_to_sRGB_string(lightness, chroma, hue, alpha)]" />
 					<span data-letter="L">[lightness]</span>
 					<span data-letter="C">[chroma]</span>

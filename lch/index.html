@@ -44,8 +44,8 @@
 		<input property="color" value="lch([round(lightness, decimals)]% [round(chroma, decimals)] [round(hue, decimals)])" readonly />
 	</label>
 	<label class="[if(!isLCH_within_sRGB(lightness, chroma, hue), 'out-of-gamut')]" style="--color: [colorRGB]"><abbr>sRGB</abbr> Color
-		<input property="colorRGB" value="[LCH_to_sRGB_string(lightness, chroma, hue, alpha)]" readonly />
-		<div class="out-of-gamut-warning">Out of sRGB gamut, displaying [LCH_to_sRGB_string(lightness, chroma, hue, alpha, true)]</div>
+		<input property="colorRGB" value="[LCH_to_sRGB_string(lightness, chroma, hue, alpha, true)]" readonly />
+		<div class="out-of-gamut-warning">Color is actually [LCH_to_sRGB_string(lightness, chroma, hue, alpha)], which is out of sRGB gamut; auto-corrected to sRGB boundary.</div>
 	</label>
 
 	<details mv-attribute="open" property="showAdvanced" mv-mode="read">

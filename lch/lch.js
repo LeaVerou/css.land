@@ -81,8 +81,8 @@ function slider_stops(range, l, c, h, a, index) {
 	}).join(", ");
 }
 
-function importColor() {
-	var str = prompt("Enter any color format your browser recognizes");
+function CSS_color_to_LCH(str) {
+	str = str || prompt("Enter any sRGB color format your browser recognizes, or a color(display-p3) color");
 
 	if (!str) {
 		return;

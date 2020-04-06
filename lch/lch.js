@@ -82,25 +82,36 @@ function slider_stops(range, l, c, h, a, index) {
 }
 
 function importColor() {
-	var str = prompt("Enter any sRGB color format your browser recognizes");
+	var str = prompt("Enter any color format your browser recognizes");
 
 	if (!str) {
 		return;
 	}
 
-	var dummy = document.createElement("_");
-	document.body.appendChild(dummy);
-	dummy.style.color = str;
-	var rgbaStr = getComputedStyle(dummy).color;
-	// console.log("computed style was", rgbaStr);
-	var rgba = rgbaStr.match(/-?[\d.]+/g).map((x, i) => i < 3? x/255 : +x);
-	var lch = sRGB_to_LCH(rgba.slice(0, 3));
+	const prefixP3 = "color(display-p3 ";
+
+	if (str.trim().indexOf(prefixP3) === 0) {
+		var params = str.slice(prefixP3.length).match(/-?[\d.]+/g).map(x => +x);
+		console.log(params);
+		var lch = P3_to_LCH(params.slice(0, 3));
+	}
+	else {
+		// Assume RGBA for now, normalize via computed style
+		var dummy = document.createElement("_");
+		document.body.appendChild(dummy);
+		dummy.style.color = str;
+		var computedStr = getComputedStyle(dummy).color;
+		var params = computedStr.match(/-?[\d.]+/g).map(x => +x);
+
+		params = params.map((x, i) => i < 3? x/255 : x);
+		var lch = sRGB_to_LCH(params.slice(0, 3));
+	}
 
 	return {
 		lightness: lch[0],
 		chroma: lch[1],
 		hue: lch[2],
-		alpha: (rgba[3] || 1) * 100
+		alpha: (params[3] || 1) * 100
 	};
 }
 
@@ -162,3 +173,10 @@ function LCH_name(l, c, h) {
 
 	return ret;
 }
+
+// Select text in readonly input fields when you focus them
+document.addEventListener("click", evt => {
+	if (evt.target.matches("input[readonly]")) {
+		evt.target.select();
+	}
+});

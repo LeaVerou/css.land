@@ -1,24 +1,27 @@
+const supportsP3 = self.CSS && CSS.supports("color", "color(display-p3 0 1 0)");
+
 function LCH_to_r2020_string(l, c, h, a = 100) {
 	return "color(rec2020 " + LCH_to_r2020([+l, +c, +h]).map(x => {
 		x = Math.round(x * 10000)/10000;
 		return x;
-	}).join(" ") + (a < 100? `/ ${a}%` : "") + ")"
+	}).join(" ") + (a < 100? `/ ${a}%` : "") + ")";
 }
 
 function LCH_to_P3_string(l, c, h, a = 100) {
 	return "color(display-p3 " + LCH_to_P3([+l, +c, +h]).map(x => {
 		x = Math.round(x * 10000)/10000;
 		return x;
-	}).join(" ") + (a < 100? `/ ${a}%` : "") + ")"
+	}).join(" ") + (a < 100? `/ ${a}%` : "") + ")";
 }
 
 function LCH_to_sRGB_string(l, c, h, a = 100, forceInGamut = false) {
 	if (forceInGamut) {
-		[l,c,h] = force_into_sRGB_gamut(l,c,h);
+		[l, c, h] = force_into_sRGB_gamut(l, c, h);
 	}
+
 	return "rgb(" + LCH_to_sRGB([+l, +c, +h]).map(x => {
-		return Math.round(x * 10000)/100 + "%"
-	}).join(" ") + (a < 100? ` / ${a}%` : "") + ")"
+		return Math.round(x * 10000)/100 + "%";
+	}).join(" ") + (a < 100? ` / ${a}%` : "") + ")";
 }
 
 function force_into_sRGB_gamut(l, c, h) {
@@ -26,20 +29,27 @@ function force_into_sRGB_gamut(l, c, h) {
 	// by holding the l and h steady,
 	// and adjusting the c via binary-search
 	// until the color is on the sRGB boundary.
-	if(isLCH_within_sRGB(l,c,h)) return [l,c,h];
+	if (isLCH_within_sRGB(l, c, h)) {
+		return [l, c, h];
+	}
+
 	let hiC = c;
 	let loC = 0;
+	const ε = .0001;
 	c /= 2;
+
 	// .0001 chosen fairly arbitrarily as "close enough"
-	while(hiC - loC > .0001) {
-		if(isLCH_within_sRGB(l,c,h)) {
+	while (hiC - loC > ε) {
+		if (isLCH_within_sRGB(l, c, h)) {
 			loC = c;
-		} else {
+		}
+		else {
 			hiC = c;
 		}
 		c = (hiC + loC)/2;
 	}
-	return [l,c,h];
+
+	return [l, c, h];
 }
 
 function isLCH_within_sRGB(l, c, h) {
@@ -66,7 +76,8 @@ function slider_stops(range, l, c, h, a, index) {
 	return range.map(x => {
 		args = [l, c, h, a];
 		args[index] = x;
-		return LCH_to_sRGB_string(...args);
+		var LCH_to_string = supportsP3? LCH_to_P3_string : LCH_to_sRGB_string;
+		return LCH_to_string(...args);
 	}).join(", ");
 }
 

@@ -12,9 +12,10 @@
 	<script src="https://drafts.csswg.org/css-color-4/utilities.js"></script>
 </head>
 <body>
-	<main mv-storage="local" mv-app="lchPicker" mv-autosave style="--color: [colorRGB]"
+	<main mv-storage="local" mv-app="lchPicker" mv-autosave style="--color: [if(supportsP3, colorP3, colorRGB)]"
 	mv-init='data:application/json,{"lightness": 50, "chroma": 50, "hue": 50, "alpha": 100}'
 	class="[if(showAdvanced, 'show-advanced')]" mv-mode="read">
+		<meta property="supportsP3" content='[self.CSS && CSS.supports("color", "color(display-p3 0 1 0)")]'>
 		<h1>
 			LCH Colour Picker
 			<button mv-action="set(lchPicker, importColor())">Import…</button>
@@ -43,7 +44,8 @@
 	<label>CSS Color <span class="decimals">(<span property="decimals" mv-mode="edit" mv-edit-type="number" mv-edit-min="0" mv-edit-max="20">3</span> decimals)</span>
 		<input property="color" value="lch([round(lightness, decimals)]% [round(chroma, decimals)] [round(hue, decimals)])" readonly />
 	</label>
-	<label class="[if(!isLCH_within_sRGB(lightness, chroma, hue), 'out-of-gamut')]" style="--color: [colorRGB]"><abbr>sRGB</abbr> Color
+	<label class="[if(!isLCH_within_sRGB(lightness, chroma, hue), 'out-of-gamut')]" style="--color: [colorRGB]">
+		<abbr>sRGB</abbr> Color
 		<input property="colorRGB" value="[LCH_to_sRGB_string(lightness, chroma, hue, alpha, true)]" readonly />
 		<div class="out-of-gamut-warning">Color is actually [LCH_to_sRGB_string(lightness, chroma, hue, alpha)], which is out of sRGB gamut; auto-corrected to sRGB boundary.</div>
 	</label>
@@ -56,8 +58,8 @@
 		</label>
 
 		<label class="[if(!isLCH_within_r2020(lightness, chroma, hue), 'out-of-gamut')]">Rec.2020 Color
-			<input property="colorP3" value="[LCH_to_r2020_string(lightness, chroma, hue)]" readonly />
-			<div class="out-of-gamut-warning">Out of Rec.2020 gamut, are you kidding!!</div>
+			<input property="colorR2020" value="[LCH_to_r2020_string(lightness, chroma, hue)]" readonly />
+			<div class="out-of-gamut-warning">Out of Rec.2020 gamut, are you kidding?!</div>
 		</label>
 
 		<section>

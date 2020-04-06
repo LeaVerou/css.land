@@ -45,14 +45,15 @@
 		<input property="color" value="lch([round(lightness, decimals)]% [round(chroma, decimals)] [round(hue, decimals)])" readonly />
 	</label>
 	<label class="[if(!isLCH_within_sRGB(lightness, chroma, hue), 'out-of-gamut')]" style="--color: [colorRGB]">
-		<abbr>sRGB</abbr> Color
+		<abbr>sRGB</abbr> Color <span mv-if="!supportsP3" title="This is what is currently displayed">👁</span>
 		<input property="colorRGB" value="[LCH_to_sRGB_string(lightness, chroma, hue, alpha, true)]" readonly />
 		<div class="out-of-gamut-warning">Color is actually [LCH_to_sRGB_string(lightness, chroma, hue, alpha)], which is out of sRGB gamut; auto-corrected to sRGB boundary.</div>
 	</label>
 
 	<details mv-attribute="open" property="showAdvanced">
 		<summary>Advanced</summary>
-		<label class="[if(!isLCH_within_P3(lightness, chroma, hue), 'out-of-gamut')]">P3 Color
+		<label class="[if(!isLCH_within_P3(lightness, chroma, hue), 'out-of-gamut')]">
+			P3 Color <span mv-if="supportsP3" title="This is what is currently displayed">👁</span>
 			<input property="colorP3" value="[LCH_to_P3_string(lightness, chroma, hue)]" readonly />
 			<div class="out-of-gamut-warning">Out of P3 gamut, not displayable on most screens as of 2019</div>
 		</label>

@@ -42,7 +42,7 @@
 			<input type="number" property="alphaNumber" mv-default="[alpha]" style="--percentage: [alpha / 100]" max="100" />
 		</label>
 	<label>CSS Color <span class="decimals">(<span property="decimals" mv-mode="edit" mv-edit-type="number" mv-edit-min="0" mv-edit-max="20">3</span> decimals)</span>
-		<input property="color" value="lch([round(lightness, decimals)]% [round(chroma, decimals)] [round(hue, decimals)])" readonly />
+		<input property="color" value="lch([round(lightness, decimals)]% [round(chroma, decimals)] [round(hue, decimals)][alpha_to_string(alpha)])" readonly />
 	</label>
 	<label class="[if(!isLCH_within_sRGB(lightness, chroma, hue), 'out-of-gamut')]" style="--color: [colorRGB]">
 		<abbr>sRGB</abbr> Color <span mv-if="!supportsP3" title="This is what is currently displayed">👁</span>
@@ -54,12 +54,12 @@
 		<summary>Advanced</summary>
 		<label class="[if(!isLCH_within_P3(lightness, chroma, hue), 'out-of-gamut')]">
 			P3 Color <span mv-if="supportsP3" title="This is what is currently displayed">👁</span>
-			<input property="colorP3" value="[LCH_to_P3_string(lightness, chroma, hue)]" readonly />
-			<div class="out-of-gamut-warning">Out of P3 gamut, not displayable on most screens as of 2019</div>
+			<input property="colorP3" value="[LCH_to_P3_string(lightness, chroma, hue, alpha, true)]" readonly />
+			<div class="out-of-gamut-warning">Color is actually [LCH_to_P3_string(lightness, chroma, hue, alpha)], which is not displayable on most screens as of 2019; auto-corrected to P3 boundary.</div>
 		</label>
 
 		<label class="[if(!isLCH_within_r2020(lightness, chroma, hue), 'out-of-gamut')]">Rec.2020 Color
-			<input property="colorR2020" value="[LCH_to_r2020_string(lightness, chroma, hue)]" readonly />
+			<input property="colorR2020" value="[LCH_to_r2020_string(lightness, chroma, hue, alpha)]" readonly />
 			<div class="out-of-gamut-warning">Out of Rec.2020 gamut, are you kidding?!</div>
 		</label>
 

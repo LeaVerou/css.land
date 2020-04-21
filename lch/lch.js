@@ -1,10 +1,14 @@
 const supportsP3 = self.CSS && CSS.supports("color", "color(display-p3 0 1 0)");
 
+function alpha_to_string(a = 100) {
+	return (a < 100? ` / ${a}%` : "");
+}
+
 function LCH_to_r2020_string(l, c, h, a = 100) {
 	return "color(rec2020 " + LCH_to_r2020([+l, +c, +h]).map(x => {
 		x = Math.round(x * 10000)/10000;
 		return x;
-	}).join(" ") + (a < 100? `/ ${a}%` : "") + ")";
+	}).join(" ") + alpha_to_string(a) + ")";
 }
 
 function LCH_to_P3_string(l, c, h, a = 100, forceInGamut = false) {
@@ -15,7 +19,7 @@ function LCH_to_P3_string(l, c, h, a = 100, forceInGamut = false) {
 	return "color(display-p3 " + LCH_to_P3([+l, +c, +h]).map(x => {
 		x = Math.round(x * 10000)/10000;
 		return x;
-	}).join(" ") + (a < 100? `/ ${a}%` : "") + ")";
+	}).join(" ") + alpha_to_string(a) + ")";
 }
 
 function LCH_to_sRGB_string(l, c, h, a = 100, forceInGamut = false) {
@@ -25,7 +29,7 @@ function LCH_to_sRGB_string(l, c, h, a = 100, forceInGamut = false) {
 
 	return "rgb(" + LCH_to_sRGB([+l, +c, +h]).map(x => {
 		return Math.round(x * 10000)/100 + "%";
-	}).join(" ") + (a < 100? ` / ${a}%` : "") + ")";
+	}).join(" ") + alpha_to_string(a) + ")";
 }
 
 function force_into_gamut(l, c, h, isLCH_within) {

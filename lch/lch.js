@@ -1,35 +1,43 @@
 const supportsP3 = self.CSS && CSS.supports("color", "color(display-p3 0 1 0)");
 
+function alpha_to_string(a = 100) {
+	return (a < 100? ` / ${a}%` : "");
+}
+
 function LCH_to_r2020_string(l, c, h, a = 100) {
 	return "color(rec2020 " + LCH_to_r2020([+l, +c, +h]).map(x => {
 		x = Math.round(x * 10000)/10000;
 		return x;
-	}).join(" ") + (a < 100? `/ ${a}%` : "") + ")";
+	}).join(" ") + alpha_to_string(a) + ")";
 }
 
-function LCH_to_P3_string(l, c, h, a = 100) {
+function LCH_to_P3_string(l, c, h, a = 100, forceInGamut = false) {
+	if (forceInGamut) {
+		[l, c, h] = force_into_gamut(l, c, h, isLCH_within_P3);
+	}
+
 	return "color(display-p3 " + LCH_to_P3([+l, +c, +h]).map(x => {
 		x = Math.round(x * 10000)/10000;
 		return x;
-	}).join(" ") + (a < 100? `/ ${a}%` : "") + ")";
+	}).join(" ") + alpha_to_string(a) + ")";
 }
 
 function LCH_to_sRGB_string(l, c, h, a = 100, forceInGamut = false) {
 	if (forceInGamut) {
-		[l, c, h] = force_into_sRGB_gamut(l, c, h);
+		[l, c, h] = force_into_gamut(l, c, h, isLCH_within_sRGB);
 	}
 
 	return "rgb(" + LCH_to_sRGB([+l, +c, +h]).map(x => {
 		return Math.round(x * 10000)/100 + "%";
-	}).join(" ") + (a < 100? ` / ${a}%` : "") + ")";
+	}).join(" ") + alpha_to_string(a) + ")";
 }
 
-function force_into_sRGB_gamut(l, c, h) {
+function force_into_gamut(l, c, h, isLCH_within) {
 	// Moves an lch color into the sRGB gamut
 	// by holding the l and h steady,
 	// and adjusting the c via binary-search
 	// until the color is on the sRGB boundary.
-	if (isLCH_within_sRGB(l, c, h)) {
+	if (isLCH_within(l, c, h)) {
 		return [l, c, h];
 	}
 
@@ -40,7 +48,7 @@ function force_into_sRGB_gamut(l, c, h) {
 
 	// .0001 chosen fairly arbitrarily as "close enough"
 	while (hiC - loC > ε) {
-		if (isLCH_within_sRGB(l, c, h)) {
+		if (isLCH_within(l, c, h)) {
 			loC = c;
 		}
 		else {
@@ -74,7 +82,7 @@ function isLCH_within_r2020(l, c, h) {
 // (we need to use more to emulate proper interpolation)
 function slider_stops(range, l, c, h, a, index) {
 	return range.map(x => {
-		args = [l, c, h, a];
+		args = [l, c, h, a, true];
 		args[index] = x;
 		var LCH_to_string = supportsP3? LCH_to_P3_string : LCH_to_sRGB_string;
 		return LCH_to_string(...args);

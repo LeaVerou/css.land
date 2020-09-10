@@ -275,11 +275,13 @@ h2 {
 			background: rgba(0,0,0,.25);
 		}
 
-		h2 .clear {
+		h2 .clear,
+		h2 .download {
 			margin-left: auto;
 		}
 
-		h2 .clear:hover {
+		h2 .clear:hover,
+		h2 .download:hover {
 			background: #c00;
 			color: white;
 		}

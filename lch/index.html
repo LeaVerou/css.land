@@ -14,11 +14,11 @@
 <body>
 	<main mv-storage="local" mv-app="lchPicker" mv-autosave style="--color: [if(supportsP3, colorP3, colorRGB)]"
 	mv-init='data:application/json,{"lightness": 50, "chroma": 50, "hue": 50, "alpha": 100}'
-	class="[if(showAdvanced, 'show-advanced')]" mv-mode="read">
+	class="[if(showAdvanced, 'show-advanced')]" mv-mode="read" mv-bar="with import export">
 		<meta property="supportsP3" content='[self.CSS && CSS.supports("color", "color(display-p3 0 1 0)")]'>
 		<h1>
 			LCH Colour Picker
-			<button mv-action="set(lchPicker, CSS_color_to_LCH())">Import…</button>
+			<button mv-action="set(lchPicker, CSS_color_to_LCH())">Enter CSS Color…</button>
 			<span class="name" hidden>[LCH_name(lightness, chroma, hue)]</span>
 		</h1>
 		<label class="color-slider-label">Lightness (0-100)
@@ -67,6 +67,7 @@
 			<h2>
 				Saved colors
 				<button mv-action="add(group(lightness: lightness, chroma: chroma, hue: hue, alpha: alpha), storedColor)">+ Add current</button>
+				<button mv-action="download(storedColor, decimals)" class="download" mv-if="count(storedColor) > 0">&#x2193; Download</button>
 				<button mv-action="clear(storedColor)" class="clear" mv-if="count(storedColor) > 0">&times; Clear All</button>
 			</h2>
 			<div id="saved">
@@ -104,6 +105,7 @@
 </main>
 
 <script src="lch.js"></script>
+<script src="download.js"></script>
 
 </body>
 </html>

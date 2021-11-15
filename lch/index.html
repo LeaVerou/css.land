@@ -49,6 +49,11 @@
 		<input property="colorRGB" value="[LCH_to_sRGB_string(lightness, chroma, hue, alpha, true)]" readonly />
 		<div class="out-of-gamut-warning">Color is actually [LCH_to_sRGB_string(lightness, chroma, hue, alpha)], which is out of sRGB gamut; auto-corrected to sRGB boundary.</div>
 	</label>
+	<label class="[if(!isLCH_within_sRGB(lightness, chroma, hue), 'out-of-gamut')]" style="--color: [colorRGB]">
+		<abbr>sRGB</abbr> Color (Hex) <span mv-if="!supportsP3" title="This is what is currently displayed">👁</span>
+		<input property="colorRGBhex" value="[LCH_to_sRGB_hex_string(lightness, chroma, hue, alpha, true)]" readonly />
+		<div class="out-of-gamut-warning">Color is actually [LCH_to_sRGB_hex_string(lightness, chroma, hue, alpha)], which is out of sRGB gamut; auto-corrected to sRGB boundary.</div>
+	</label>
 
 	<details mv-attribute="open" property="showAdvanced">
 		<summary>Advanced</summary>

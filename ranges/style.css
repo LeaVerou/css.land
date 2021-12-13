@@ -1,0 +1,28 @@
+body {
+	margin: 0;
+	min-height: 100vh;
+	font: 200%/1.5 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	padding: 1em;
+}
+
+input {
+	font: inherit;
+}
+
+code,
+#calcExpression {
+	font-family: Consolas, Monaco, monospace;
+	background: hsl(220 10% 95%);
+	padding: .2em .3em;
+	border-radius: .2em;
+	border: none;
+}
+
+footer {
+	font-size: 50%;
+	opacity: .5;
+}
+
+footer details:not([open]) {
+	display: inline;
+}

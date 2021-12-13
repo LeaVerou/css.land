@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>CSS Linear Range Mapping for Custom Properties</title>
+	<link rel="stylesheet" href="https://get.mavo.io/mavo.css">
+	<link rel="stylesheet" href="style.css">
+	<script src="https://get.mavo.io/mavo.js" async></script>
+	<script src="index.js" async></script>
+</head>
+<body>
+	<div mv-app="rangeMapping" mv-mode="edit">
+		<p>Our variable is <code>--<span property="variableName" mv-default="[url('variableName') or 'p']"></span></code>.
+		<p>
+			When <code>--[variableName]</code> is
+			<code property="min_x" mv-default="[url('min_x') or -1]"></code>,
+			we want to output
+			<code property="min_y" mv-default="[url('min_y') or '.2em']"></code>.
+		<p>
+			When <code>--[variableName]</code> is
+			<code property="max_x" mv-default="[url('max_x') or 1]">1</code>,
+			we want to output
+			<code property="max_y" mv-default="[url('max_y') or '.8em']">.8em</code>.
+
+		<p>The expression we need is <input property id="calcExpression" style="width: [calcExpression.length]ch" value="calc([a] * var(--[variableName]) + [b])" readonly></p>
+
+		<footer>
+			<a href="?min_x=[min_x]&min_y=[min_y]&max_x=[max_x]&max_y=[max_y]&variableName=[variableName]">Permalink to this range</a>
+			&bull;
+			<details>
+				<summary>Debug info</summary>
+				a_raw = <span property="a_raw">([max_y] - [min_y]) / ([max_x] - [min_x])</span><br>
+				a = <span property="a">[simplifyExpression(a_raw)]</span><br>
+				b_raw = <span property="b_raw">[min_y] - [a] * [min_x]</span><br>
+				b = <span property="b">[simplifyExpression(b_raw)]</span>
+			</details>
+			&bull; Made by <a href="https://lea.verou.me">Lea Verou</a> with <a href="https://mavo.io">Mavo</a>
+		</footer>
+	</div>
+</body>
+</html>

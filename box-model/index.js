@@ -7,7 +7,7 @@ function textContent(node) {
 
 		if (node.nodeType === 1) {
 			if (node.matches("input, textarea")) {
-				ret += "checked" in node? "" : node.value;
+				ret += ["checkbox", "radio", "file"].includes(node.type)? "" : node.value;
 			}
 			else if (node.matches("select")) {
 				ret += [...node.selectedOptions].map(o => o.textContent).join("\n");

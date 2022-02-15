@@ -57,7 +57,7 @@
 				<code class="declaration [if(border_active, 'active')]">
 					<label><input type="checkbox" property="border_active" checked> border</label>
 					<span class="value">
-						<span property="border" mv-edit-type="popup" mv-editor-type="range">10</span>px solid red</span>
+						<span property="border" mv-edit-type="popup" mv-editor-type="range">10</span>px solid hsl(0 0% 0% / .5)</span>
 						<meta property="border_value" content="[if(border_active, border, 0)]" />
 				</code>
 				<code class="declaration [if(margin_active, 'active')]">
@@ -71,6 +71,12 @@
 					<span class="value">
 						<span property="box_sizing" mv-options="border-box, content-box"></span></span>
 						<meta property="box_sizing_value" content="[if(box_sizing_active, box_sizing, 'content-box')]" />
+				</code>
+				<code class="declaration [if(outline_active, 'active')]">
+					<label><input type="checkbox" property="outline_active"> outline</label>
+					<span class="value">
+						<span property="outline" mv-edit-type="popup" mv-editor-type="range">5</span>px dashed red</span>
+						<meta property="outline_value" content="[if(outline_active, outline, 0)]" />
 				</code>
 			</div>
 		</div>

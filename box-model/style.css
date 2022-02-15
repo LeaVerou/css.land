@@ -101,7 +101,7 @@ code {
 	}
 
 .code-container {
-
+	min-width: 37ch;
 }
 
 .declaration:not(.active) {

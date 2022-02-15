@@ -13,7 +13,7 @@
 <body>
 	<main>
 	<h1>css.land/<strong>box-model</strong></h1>
-	<div mv-app="box_model" mv-mode="edit" class="[if(!width_active, 'no-width')]">
+	<div mv-app="box_model" mv-mode="edit" class="[if(!width_active, 'no-width')]" mv-storage="#data" mv-autosave>
 		<div class="viewport-container">
 			<div class="viewport">
 				<div class="box" style="[textContent(css_code)]">
@@ -94,6 +94,10 @@
 						<span property="outline" mv-edit-type="popup" mv-editor-type="range">5</span>px dashed red</span>
 						<meta property="outline_value" content="[if(outline_active, outline, 0)]" />
 				</code>
+			</div>
+			<div hidden="[!current_data]">
+				<span id="data" property="current_data" mv-storage="none" mv-mode="read" hidden></span>
+				<a href="?source=data:application/json,[encodeURIComponent(current_data)]">Permalink</a>
 			</div>
 		</div>
 

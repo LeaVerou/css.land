@@ -22,12 +22,20 @@
 					It’s boxes all the way down!
 				</div>
 			</div>
-			<div class="dimension outer" style="width: [outer_width]px; --margin: [margin_value];">
+			<div class="dimension outer" style="width: [if(width_unit = 'px', outer_width & 'px', outer_width_percent)]; --margin: [margin_value];">
 				<div class="dimension-label">
-					<span property="outer_width" mv-if="width_active" datatype="string" title="[
+					<span property="outer_width" mv-if="width_active and width_unit = 'px'" datatype="string" title="[
 						width & ' + ' &
 						if (box_sizing_value = 'content-box', '2 * ' & padding_value & ' + 2 * ' & border_value)
 					]">[width_value + if (box_sizing_value = 'content-box', padding_value * 2 + border_value * 2)]</span>
+					<span mv-if="width_active and width_unit = '%'" property="outer_width_percent">
+						calc([width_value][width_unit
+							][
+							if (box_sizing_value = 'content-box', ' + ' & (padding_value * 2 + border_value * 2) & 'px')
+							][
+							if(margin_active, ' - 2 * ' & margin & 'px')
+							])
+					</span>
 					<span mv-if="!width_active">
 						Container width [if(margin_active, '- 2 * ' & margin & 'px')]
 					</span>
@@ -39,7 +47,9 @@
 				<code class="declaration [if(width_active, 'active')]">
 					<label><input type="checkbox" property="width_active" checked> width</label>
 					<span class="value">
-						<span property="width" mv-edit-type="popup" mv-editor-type="range" mv-editor-max="900">500</span>px</span>
+						<span property="width" mv-edit-type="popup" mv-editor-type="range" mv-editor-max="900">500</span><!--
+						--><span property="width_unit" mv-options="px, %"></span>
+					</span>
 					<meta property="width_value" content="[if(width_active, width)]" />
 				</code>
 				<code class="declaration [if(height_active, 'active')]">

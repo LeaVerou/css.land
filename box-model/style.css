@@ -1,0 +1,140 @@
+:root {
+	--font-body: system-ui, sans-serif;
+	--font-mono: Consolas, Monaco, monospace;
+}
+
+body {
+	margin: 0;
+	min-height: 100vh;
+	font: 200%/1.5 var(--font-body);
+	padding: 1em;
+}
+
+h1 {
+	margin: 0;
+	text-align: right;
+	font-size: 300%;
+	font-weight: bold;
+	color: hsl(220 10% 80%);
+}
+
+	h1 strong {
+		color: black;
+	}
+
+main {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	grid-template-rows: 1fr auto;
+	gap: 1em;
+}
+
+input {
+	font: inherit;
+}
+
+code {
+	font-family: var(--font-mono);
+}
+
+.viewport-container {
+	--chrome-color: hsl(220 11% 89%);
+	--chrome-thickness: 10px;
+	--body-margin: 0px;
+}
+
+.viewport {
+	width: 50vw;
+	aspect-ratio: 16 / 10;
+	padding: var(--body-margin);
+	border: 0 solid transparent;
+	border-top-width: 40px;
+	box-shadow: 0 0 0 10px var(--chrome-color);
+	background:
+		radial-gradient(#27C841 70%, transparent 71%) 40px 0 / 12px 12px,
+		radial-gradient(#FEBD2E 70%, transparent 71%) 20px 0 / 12px 12px,
+		radial-gradient(#FF6058 70%, transparent 71%) 0 0 / 12px 12px,
+		linear-gradient(white, white) 80px 2.5px / 84% 25px,
+		linear-gradient(var(--chrome-color), var(--chrome-color)) 0 0 / 100% 40px;
+	background-repeat: no-repeat;
+	background-origin: border-box;
+	background-clip: border-box;
+	border-radius: .1px;
+	box-sizing: border-box;
+	overflow: auto;
+	font-size: 32px;
+}
+
+.box {
+	background: skyblue;
+}
+
+.dimension {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 1em;
+	border: solid;
+	border-width: 0 1px;
+	background: linear-gradient(currentColor, currentColor) center / 100% 1px no-repeat
+}
+
+.dimension .dimension-label {
+		background: white;
+		padding: 0 .5em;
+		font: 100% / 1 var(--font-mono)
+	}
+
+.dimension .dimension-label [property="outer_width"]::after {
+			content: "px";
+		}
+
+.dimension.outer {
+		margin-left: calc(var(--body-margin, 0px) + (var(--margin, 0) * 1px))
+	}
+
+.no-width .dimension.outer {
+			width: auto !important;
+			margin-right: calc(var(--body-margin, 0px) + (var(--margin, 0) * 1px))
+	}
+
+.code-container {
+
+}
+
+.declaration:not(.active) {
+		--custom-visibility: hidden;
+		opacity: .4
+	}
+
+.declaration:not(.active) .value {
+			display: none;
+		}
+
+.declaration.active label::after,
+		.declaration.active .value::after {
+			content: ":";
+			opacity: .4;
+		}
+
+.declaration.active .value::after {
+			content: ";";
+		}
+
+.declaration label {
+		font-weight: bold;
+	}
+
+.code > code {
+		display: block;
+	}
+
+footer {
+	grid-column: 1 / span 2;
+	font-size: 50%;
+	opacity: .5;
+}
+
+footer details:not([open]) {
+	display: inline;
+}

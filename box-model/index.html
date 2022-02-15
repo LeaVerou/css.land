@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>CSS Box Model</title>
+	<link rel="stylesheet" href="https://get.mavo.io/mavo.css">
+	<link rel="stylesheet" href="style.css">
+	<script src="https://get.mavo.io/mavo.js" async></script>
+	<script src="index.js" async></script>
+</head>
+<body>
+	<h1>css.land/<strong>box-model</strong></h1>
+	<main mv-app="box_model" mv-mode="edit" class="[if(!width_active, 'no-width')]">
+		<div class="viewport-container">
+			<div class="viewport">
+				<div class="box" style="[textContent(css_code)]">
+					Everything displayed by CSS is a box. Understanding how the CSS Box Model works is therefore a core foundation of CSS.
+					Whether that's a box that uses border-radius to look like a circle, or even just some text: the key thing to remember is that it's all boxes.
+					It’s boxes all the way down!
+				</div>
+			</div>
+			<div class="dimension outer" style="width: [outer_width]px; --margin: [margin_value];">
+				<div class="dimension-label">
+					<span property="outer_width" mv-if="width_active" datatype="string" title="[
+						width & ' + ' &
+						if (box_sizing_value = 'content-box', '2 * ' & padding_value & ' + 2 * ' & border_value)
+					]">[width_value + if (box_sizing_value = 'content-box', padding_value * 2 + border_value * 2)]</span>
+					<span mv-if="!width_active">
+						Container width [if(margin_active, '- 2 * ' & margin & 'px')]
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="code-container">
+			<div class="code" property="css_code">
+				<code class="declaration [if(width_active, 'active')]">
+					<label><input type="checkbox" property="width_active" checked> width</label>
+					<span class="value">
+						<span property="width" mv-edit-type="popup" mv-editor-type="range" mv-editor-max="900">500</span>px</span>
+					<meta property="width_value" content="[if(width_active, width)]" />
+				</code>
+				<code class="declaration [if(height_active, 'active')]">
+					<label><input type="checkbox" property="height_active"> height</label>
+					<span class="value">
+						<span property="height" mv-edit-type="popup" mv-editor-type="range" mv-editor-max="900">300</span>px</span>
+					<meta property="height_value" content="[if(height_active, height)]" />
+				</code>
+				<code class="declaration [if(padding_active, 'active')]">
+					<label><input type="checkbox" property="padding_active" checked> padding</label>
+					<span class="value">
+						<span property="padding" mv-edit-type="popup" mv-editor-type="range">10</span>px</span>
+						<meta property="padding_value" content="[if(padding_active, padding, 0)]" />
+				</code>
+				<code class="declaration [if(border_active, 'active')]">
+					<label><input type="checkbox" property="border_active" checked> border</label>
+					<span class="value">
+						<span property="border" mv-edit-type="popup" mv-editor-type="range">10</span>px solid red</span>
+						<meta property="border_value" content="[if(border_active, border, 0)]" />
+				</code>
+				<code class="declaration [if(margin_active, 'active')]">
+					<label><input type="checkbox" property="margin_active"> margin</label>
+					<span class="value">
+						<span property="margin" mv-edit-type="popup" mv-editor-type="range">10</span>px</span>
+						<meta property="margin_value" content="[if(margin_active, margin, 0)]" />
+				</code>
+				<code class="declaration [if(box_sizing_active, 'active')]">
+					<label><input type="checkbox" property="box_sizing_active"> box-sizing</label>
+					<span class="value">
+						<span property="box_sizing" mv-options="border-box, content-box"></span></span>
+						<meta property="box_sizing_value" content="[if(box_sizing_active, box_sizing, 'content-box')]" />
+				</code>
+			</div>
+		</div>
+
+		<footer>
+			Made by <a href="https://lea.verou.me">Lea Verou</a> with <a href="https://mavo.io">Mavo</a>
+			&bull;
+			<details>
+				<summary>Debug info</summary>
+				<pre>[textContent(css_code)]</pre>
+			</details>
+
+		</footer>
+	</main>
+</body>
+</html>

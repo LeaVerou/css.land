@@ -22,7 +22,7 @@
 					It’s boxes all the way down!
 				</div>
 			</div>
-			<div class="dimension outer" style="width: [if(width_unit = 'px', outer_width & 'px', outer_width_percent)]; --margin: [margin_value];">
+			<div mv-if="display_value = 'block'" class="dimension outer" style="width: [if(width_unit = 'px', outer_width & 'px', outer_width_percent)]; --margin: [margin_value];">
 				<div class="dimension-label">
 					<span property="outer_width" mv-if="width_active and width_unit = 'px'" datatype="string" title="[
 						width & ' + ' &
@@ -44,6 +44,12 @@
 		</div>
 		<div class="code-container">
 			<div class="code" property="css_code">
+				<code class="declaration [if(display_active, 'active')]">
+					<label><input type="checkbox" property="display_active"> display</label>
+					<span class="value">
+						<span property="display" mv-options="block, inline, inline-block, none, flex, inline-flex, grid, inline-grid, list-item"></span></span>
+						<meta property="display_value" content="[if(display_active, display, 'block')]" />
+				</code>
 				<code class="declaration [if(width_active, 'active')]">
 					<label><input type="checkbox" property="width_active" checked> width</label>
 					<span class="value">

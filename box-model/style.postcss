@@ -4,8 +4,10 @@
 }
 
 body {
-	margin: 0;
-	min-height: 100vh;
+	display: flex;
+	flex-flow: column wrap;
+	align-items: center;
+	justify-content: center;
 	font: 200%/1.5 var(--font-body);
 	padding: 1em;
 }
@@ -22,7 +24,7 @@ h1 {
 		color: black;
 	}
 
-main {
+[mv-app] {
 	display: grid;
 	grid-template-columns: auto 1fr;
 	grid-template-rows: 1fr auto;

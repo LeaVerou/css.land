@@ -11,8 +11,9 @@
 	<script src="index.js" async></script>
 </head>
 <body>
+	<main>
 	<h1>css.land/<strong>box-model</strong></h1>
-	<main mv-app="box_model" mv-mode="edit" class="[if(!width_active, 'no-width')]">
+	<div mv-app="box_model" mv-mode="edit" class="[if(!width_active, 'no-width')]">
 		<div class="viewport-container">
 			<div class="viewport">
 				<div class="box" style="[textContent(css_code)]">
@@ -83,6 +84,7 @@
 			</details>
 
 		</footer>
+	</div>
 	</main>
 </body>
 </html>

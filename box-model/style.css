@@ -8,7 +8,7 @@ body {
 	flex-flow: column wrap;
 	align-items: center;
 	justify-content: center;
-	font: 200%/1.5 var(--font-body);
+	font: 180%/1.5 var(--font-body);
 	padding: 1em;
 }
 

@@ -78,58 +78,66 @@ code {
 	margin-top: 1em;
 	border: solid;
 	border-width: 0 1px;
-	background: linear-gradient(currentColor, currentColor) center / 100% 1px no-repeat
-}
+	background: linear-gradient(currentColor, currentColor) center / 100% 1px no-repeat;
 
-.dimension .dimension-label {
+	& .dimension-label {
 		background: white;
 		padding: 0 .5em;
-		font: 100% / 1 var(--font-mono)
-	}
+		font: 100% / 1 var(--font-mono);
 
-.dimension .dimension-label [property="outer_width"]::after {
+		& [property="outer_width"]::after {
 			content: "px";
 		}
-
-.dimension.outer {
-		margin-left: calc(var(--body-margin, 0px) + (var(--margin, 0) * 1px))
 	}
 
-.no-width .dimension.outer {
+	&.outer {
+		margin-left: calc(var(--body-margin, 0px) + (var(--margin, 0) * 1px));
+
+		.no-width & {
 			width: auto !important;
-			margin-right: calc(var(--body-margin, 0px) + (var(--margin, 0) * 1px))
+			margin-right: calc(var(--body-margin, 0px) + (var(--margin, 0) * 1px));
+		}
 	}
+}
 
 .code-container {
 	min-width: 37ch;
 }
 
-.declaration:not(.active) {
+.declaration {
+	&:not(.active) {
 		--custom-visibility: hidden;
-		opacity: .4
-	}
+		opacity: .4;
 
-.declaration:not(.active) .value {
+		& .value {
 			display: none;
 		}
+	}
 
-.declaration.active label::after,
-		.declaration.active .value::after {
+	&.active {
+		& label::after,
+		& .value::after {
 			content: ":";
 			opacity: .4;
 		}
 
-.declaration.active .value::after {
+		& .value::after {
 			content: ";";
 		}
+	}
 
-.declaration label {
+	& label {
 		font-weight: bold;
 	}
 
-.code > code {
+
+}
+
+.code {
+	& > code {
 		display: block;
 	}
+}
 
 footer {
 	grid-column: 1 / span 2;

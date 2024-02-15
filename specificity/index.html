@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">🤺</text></svg>'>
+	<title>Specificity battle!</title>
+	<link rel="stylesheet" href="style.css">
+	<script type="module" src="index.js"></script>
+</head>
+<body>
+	<header>
+		<h1><span class="flipped-emoji">🤺</span> Specificity battle! 🤺</h1>
+		<p class="url">css.land/<strong>specificity</strong></p>
+	</header>
+	<div>
+		<div class="selector selector-1">
+			<label>
+				Selector 1:
+				<input value="#container *" id="selector1" />
+			</label>
+			<output class="specificity" for="selector1"></output>
+		</div>
+		<output for="selector1, selector2" class="op">></output>
+		<div class="selector selector-2">
+			<label>
+				Selector 2:
+				<input value="div.box" id="selector2" />
+			</label>
+			<output class="specificity" for="selector2"></output>
+		</div>
+	</div>
+	<footer>
+		Made by <a href="https://lea.verou.me">Lea Verou</a> with <a href="https://parsel.verou.me">Parsel</a>
+	</footer>
+</body>
+</html>

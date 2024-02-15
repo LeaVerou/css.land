@@ -1,0 +1,136 @@
+@import url("https://live-colors.verou.me/dist/index.css");
+
+html {
+	font: 200%/1.5 system-ui;
+}
+
+body {
+	display: flex;
+	flex-flow: column;
+	margin: 0;
+	padding: 1em;
+	box-sizing: border-box;
+	min-height: 100vh;
+}
+
+header {
+	max-width: max-content;
+	margin-block: 1em 2em;
+	margin-inline: auto;
+	xtext-align: center;
+	font-size: 150%;
+}
+
+h1 {
+	font-size: calc(1.5em + 2vh + 2vw);
+	line-height: 1;
+	margin: 0;
+
+	& + .url {
+		margin: 0;
+		line-height: 1;
+		color: var(--color-neutral-60);
+		text-align: right;
+		margin-right: 3.5em;
+	}
+}
+
+input {
+	width: 100%;
+	margin-top: .1em;
+	font: inherit;
+	font-size: 200%;
+	border: .2em solid var(--color-neutral-80);
+	padding: 0em .4em;
+	box-sizing: border-box;
+}
+
+.flipped-emoji {
+	display: inline-block;
+	transform: scaleX(-1);
+}
+
+body > div {
+	flex: 1;
+	display: flex;
+	gap: .5em;
+	width: 100%;
+}
+
+.selector {
+	flex: 1;
+	margin: .5em;
+	position: relative;
+
+	&.winner label::before {
+		content: "🏆";
+	}
+}
+
+.specificity {
+	display: flex;
+	margin-top: 1rem;
+	text-align: center;
+	font-weight: bold;
+	font-size: 500%;
+	line-height: 1.1;
+
+	div {
+		flex: 1;
+
+		&::after {
+			font-size: 10%;
+			display: block;
+		}
+
+		&[data-value="0"] {
+			opacity: .5;
+		}
+
+		&:nth-child(1) {
+			color: var(--color-aqua);
+
+			&::after {
+				content: "#id selectors";
+				color: var(--color-aqua-40);
+			}
+		}
+
+		&:nth-child(2) {
+			color: var(--color-green);
+
+			&::after {
+				content: ".class selectors, [attribute] selectors, :pseudo-classes";
+				color: var(--color-green-40);
+			}
+		}
+
+		&:nth-child(3) {
+			color: var(--color-orange);
+
+			&::after {
+				content: "tag selectors";
+				color: var(--color-orange-40);
+			}
+		}
+	}
+}
+
+
+
+.op {
+	font-weight: bold;
+	margin-top: .4rem;
+	font-size: 600%;
+	line-height: 1;
+}
+
+footer {
+	text-align: center;
+	font-size: 50%;
+	color: var(--color-neutral-50);
+
+	a {
+		color: inherit;
+	}
+}

@@ -174,6 +174,16 @@ label:not(.out-of-gamut) .out-of-gamut-warning {
 	display: none;
 }
 
+label select {
+	font: inherit;
+	color: inherit;
+	border: none;
+	background: none;
+	
+	float: right;
+	text-align: right;
+}
+
 main > footer {
 	background: rgba(0,0,30,.05);
 	padding: inherit;
